@@ -17,7 +17,7 @@ var yy = {};
 yy.start = function(){
 	var div = $( '#container' );
 	window.m = M2048( div );
-}
+};
 
 function M2048( div ){
 	if( this instanceof M2048 ){
@@ -57,20 +57,20 @@ M2048.prototype = {
 		for( var i = 1; i <= rows ; i++ ){
 			for( var j = 1; j <= cols; j++  ){
 			
-				(function( i, j ){
-					var i = i, j = j;
-					var div = document.createElement( "div" );
-					$( div ).attr( 'class', 'div tran' );
-					$( div ).appendTo( that.div );
-					that.divs.push( div );
-					
-					that.arr.push({
-						rank : 0,
-						index : (i-1)*cols + j -1
-					});
-				})( i, j )
+        make( i, j );
 
 			}
+		}
+		function make(i,j){
+			var div = document.createElement( "div" );
+			$( div ).attr( 'class', 'div tran' );
+			$( div ).appendTo( that.div );
+			that.divs.push( div );
+			
+			that.arr.push({
+				rank : 0,
+				index : (i-1)*cols + j -1
+			});
 		}
 	},
 	makeCssCode : function(){
@@ -168,42 +168,39 @@ M2048.prototype = {
 				return false;
 			}
 			// that.printArr();
+			var i, j, arr = [];
 			switch( e.keyCode ){
 				case 37:
-					var arr = [];
-					for( var i = 1; i<=that.rows; i++ ){
+					for( i = 1; i<=that.rows; i++ ){
 						arr = [];
-						for( var j = 1; j<=that.cols; j++ ){
+						for( j = 1; j<=that.cols; j++ ){
 							arr.push( (i-1)*that.cols + j -1 );
 						}
 						that.dealArr( arr );
 					}
 					break;
 				case 38:
-					var arr = [];
-					for( var j = 1; j<=that.rows; j++ ){
+					for( j = 1; j<=that.rows; j++ ){
 						arr = [];
-						for( var i = 1; i<=that.cols; i++ ){
+						for( i = 1; i<=that.cols; i++ ){
 							arr.push( (i-1)*that.cols + j -1 );
 						}
 						that.dealArr( arr );
 					}
 					break;
 				case 39:
-					var arr = [];
-					for( var i = 1; i<=that.rows; i++ ){
+					for( i = 1; i<=that.rows; i++ ){
 						arr = [];
-						for( var j = that.cols; j>=1; j-- ){
+						for( j = that.cols; j>=1; j-- ){
 							arr.push( (i-1)*that.cols + j -1 );
 						}
 						that.dealArr( arr );
 					}
 					break;
 				case 40:
-					var arr = [];
-					for( var j = 1; j<=that.rows; j++ ){
+					for( j = 1; j<=that.rows; j++ ){
 						arr = [];
-						for( var i = that.cols; i>=1; i-- ){
+						for( i = that.cols; i>=1; i-- ){
 							arr.push( (i-1)*that.cols + j -1 );
 						}
 						that.dealArr( arr );
@@ -231,9 +228,10 @@ M2048.prototype = {
 			
 */		
 		//合并
-		for( var i =0; i<arr.length; i++ ){
+		var i, j;
+		for( i =0; i<arr.length; i++ ){
 			if( this.arr[arr[i]].rank !== 0 ){
-				for(var j=i+1; j <arr.length; j++ ){
+				for( j=i+1; j <arr.length; j++ ){
 					if( this.arr[arr[i]].rank === this.arr[arr[j]].rank ){
 						this.arr[arr[i]].rank ++;
 						this.arr[arr[j]].rank = 0;
@@ -243,9 +241,9 @@ M2048.prototype = {
 			}
 		}
 		//移位
-		for( var i=0; i<arr.length; i++ ){
+		for( i=0; i<arr.length; i++ ){
 			if( this.arr[arr[i]].rank === 0 ){
-				for( var j =i+1; j<arr.length; j++ ){
+				for( j =i+1; j<arr.length; j++ ){
 					if( this.arr[arr[j]].rank !== 0 ){
 						this.arr[arr[i]].rank = this.arr[arr[j]].rank + 0;
 						this.arr[arr[j]].rank = 0;
@@ -278,4 +276,4 @@ M2048.prototype = {
 	
 };
 
-})()
+})();
